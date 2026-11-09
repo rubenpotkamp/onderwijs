@@ -14,7 +14,7 @@
         width: 100%;
         height: 100%;
         font-family: system-ui, -apple-system, sans-serif;
-        overflow: hidden; /* Voorkomt dubbele scrollbalken */
+        overflow: hidden;
         }
 
         /* Floating Hamburger Button */
@@ -22,7 +22,7 @@
         position: fixed;
         top: 15px;
         left: 15px;
-        z-index: 1000; /* Zorgt dat de knop ALTIJD boven de iframe zweeft */
+        z-index: 1000;
         background-color: #1e293b;
         color: #fff;
         border: none;
@@ -44,7 +44,7 @@
         .sidebar {
         position: fixed;
         top: 0;
-        left: -280px; /* Verborgen buiten beeld */
+        left: -280px;
         width: 280px;
         height: 100%;
         background-color: #0f172a;
@@ -55,7 +55,7 @@
         box-shadow: 4px 0 15px rgba(0,0,0,0.2);
         }
         .sidebar.open {
-        left: 0; /* Schuift in beeld */
+        left: 0;
         }
 
         .sidebar h2 {
@@ -89,11 +89,73 @@
         color: #38bdf8;
         }
 
-        /* Iframe Container */
-        .content-frame {
+        /* Viewer Container (Kan iframe of home-content zijn) */
+        .content-container {
         width: 100%;
         height: 100vh;
         border: none;
+        position: absolute;
+        top: 0;
+        left: 0;
+        }
+
+        .content-frame {
+        width: 100%;
+        height: 100%;
+        border: none;
+        display: none;
+        }
+        .content-frame.active {
+        display: block;
+        }
+
+        /* Stijl voor de Homepagina */
+        .home-view {
+        width: 100%;
+        height: 100%;
+        padding: 80px 20px 40px 20px;
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+        overflow-y: auto;
+        text-align: center;
+        }
+        .home-view.active {
+        display: flex;
+        }
+        .home-card {
+        max-width: 700px;
+        background: #ffffff;
+        padding: 40px;
+        border-radius: 16px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+        }
+        .home-card h1 {
+        font-size: 2.2rem;
+        color: #0f172a;
+        margin-bottom: 15px;
+        }
+        .home-card p {
+        font-size: 1.1rem;
+        color: #475569;
+        line-height: 1.6;
+        margin-bottom: 25px;
+        }
+        .home-btn {
+        background-color: #0284c7;
+        color: white;
+        border: none;
+        padding: 12px 24px;
+        font-size: 1rem;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: background 0.2s;
+        }
+        .home-btn:hover {
+        background-color: #0369a1;
         }
     </style>
     </head>
@@ -108,38 +170,56 @@
     <nav class="sidebar" id="sidebar">
         <h2>Onderwijs Hub</h2>
         <ul id="navList">
-        <!-- Links worden dynamisch ingeladen via JavaScript -->
+        <!-- Dynamisch gevuld -->
         </ul>
     </nav>
 
-    <!-- Viewer Iframe -->
-    <iframe id="mainViewer" class="content-frame" src="" title="Onderwijs Content"></iframe>
+    <!-- Content Omgeving -->
+    <div class="content-container" id="contentContainer">
+        
+        <!-- Homepagina View -->
+        <div class="home-view active" id="homeView">
+        <div class="home-card">
+            <h1>Welkom bij de Onderwijs Hub</h1>
+            <p>Ontdek waardevolle tijdlijnen over muziek, cultuurgeschiedenis en meer. Gebruik het menu linksboven om door de verschillende interactieve tijdlijnen te bladeren.</p>
+            <button class="home-btn" id="startBtn">Bekijk Tijdlijnen</button>
+        </div>
+        </div>
+
+        <!-- Dynamische Iframe Views komen hier -->
+    </div>
 
     <script>
-        // 1. Beheer hier al je pagina's en tijdlijnen eenvoudig!
+        // Definieer hier je pagina's (de eerste kan de home zijn of we voegen home los toe)
         const pages = [
         {
+            title: "🏠 Home",
+            type: "home"
+        },
+        {
             title: "Muziekgeschiedenis",
+            type: "iframe",
             url: "https://cdn.knightlab.com/libs/timeline3/latest/embed/index.html?source=1cWqGtYuJrFkoTHvczyFmjTEz_2jFiRf_8d0-5_h_2tM"
         },
         {
             title: "Cultuurgeschiedenis",
+            type: "iframe",
             url: "https://cdn.knightlab.com/libs/timeline3/latest/embed/index.html?source=EXAMPLE_2"
-        },
-        {
-            title: "Kunststromingen",
-            url: "https://cdn.knightlab.com/libs/timeline3/latest/embed/index.html?source=EXAMPLE_3"
         }
         ];
 
         const sidebar = document.getElementById('sidebar');
         const menuBtn = document.getElementById('menuBtn');
         const navList = document.getElementById('navList');
-        const mainViewer = document.getElementById('mainViewer');
+        const contentContainer = document.getElementById('contentContainer');
+        const homeView = document.getElementById('homeView');
+        const startBtn = document.getElementById('startBtn');
 
-        // 2. Navigatiemenu opbouwen
+        let iframeElements = {};
+
         function buildMenu() {
         navList.innerHTML = '';
+        
         pages.forEach((page, index) => {
             const li = document.createElement('li');
             const a = document.createElement('a');
@@ -147,30 +227,56 @@
             a.href = "#";
             if (index === 0) a.classList.add('active');
 
+            // Maak iframe aan als het geen home is
+            let iframe = null;
+            if (page.type === 'iframe') {
+            iframe = document.createElement('iframe');
+            iframe.src = page.url;
+            iframe.className = 'content-frame';
+            contentContainer.appendChild(iframe);
+            iframeElements[index] = iframe;
+            }
+
             a.addEventListener('click', (e) => {
             e.preventDefault();
-            loadPage(page.url, a);
-            sidebar.classList.remove('open'); // Sluit menu na selectie
+            switchView(index, a);
+            sidebar.classList.remove('open');
             });
 
             li.appendChild(a);
             navList.appendChild(li);
         });
-
-        // Laad standaard de eerste pagina in
-        if (pages.length > 0) {
-            mainViewer.src = pages[0].url;
-        }
         }
 
-        // 3. Pagina/Iframe wisselen
-        function loadPage(url, activeLink) {
-        mainViewer.src = url;
+        function switchView(index, activeLink) {
+        // Verberg home
+        homeView.classList.remove('active');
+        
+        // Verberg alle iframes
+        Object.values(iframeElements).forEach(frame => frame.classList.remove('active'));
+
+        // Zet actieve link goed
         document.querySelectorAll('.sidebar a').forEach(link => link.classList.remove('active'));
         activeLink.classList.add('active');
+
+        // Toon de geselecteerde view
+        if (pages[index].type === 'home') {
+            homeView.classList.add('active');
+        } else if (iframeElements[index]) {
+            iframeElements[index].classList.add('active');
+        }
         }
 
-        // 4. Hamburger menu toggle
+        // Start-knop op de homepagina
+        startBtn.addEventListener('click', () => {
+        // Pak de eerste iframe link uit het menu (index 1)
+        const firstIframeLink = navList.querySelectorAll('a')[1];
+        if (firstIframeLink) {
+            firstIframeLink.click();
+        }
+        });
+
+        // Toggle menu
         menuBtn.addEventListener('click', () => {
         sidebar.classList.toggle('open');
         });
