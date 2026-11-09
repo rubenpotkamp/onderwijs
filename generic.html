@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Generieke Pagina - Onderwijs Hub</title>
+  <link rel="stylesheet" href="css/main.css">
+  <style>
+    /* Extra opmaak specifiek voor tekstpagina's / artikelen */
+    .article-header {
+      margin-bottom: 30px;
+      border-bottom: 1px solid #e2e8f0;
+      padding-bottom: 20px;
+    }
+
+    .article-header h1 {
+      font-size: 2.2rem;
+      color: var(--text-main);
+      margin-bottom: 8px;
+    }
+
+    .article-meta {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    .article-content h2 {
+      font-size: 1.5rem;
+      color: var(--text-main);
+      margin-top: 30px;
+      margin-bottom: 12px;
+    }
+
+    .article-content h3 {
+      font-size: 1.25rem;
+      color: var(--text-main);
+      margin-top: 20px;
+      margin-bottom: 8px;
+    }
+
+    .article-content p {
+      margin-bottom: 16px;
+      font-size: 1.05rem;
+      line-height: 1.7;
+    }
+
+    .article-content ul, .article-content ol {
+      margin-bottom: 16px;
+      padding-left: 20px;
+    }
+
+    .article-content li {
+      margin-bottom: 8px;
+      line-height: 1.6;
+    }
+
+    .callout-box {
+      background-color: #f1f5f9;
+      border-left: 4px solid var(--primary);
+      padding: 16px 20px;
+      border-radius: 0 8px 8px 0;
+      margin: 24px 0;
+    }
+
+    .callout-box p {
+      margin-bottom: 0;
+      color: var(--text-main);
+      font-weight: 500;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Hoofdcontent van de generieke pagina -->
+  <main class="page-container">
+    
+    <header class="article-header">
+      <h1>Titel van je nieuwe artikel of les</h1>
+      <div class="article-meta">Laatst bijgewerkt: <time datetime="2026-06-06">6 juni 2026</time> &bull; Categorie: Cultuur & Geschiedenis</div>
+    </header>
+
+    <div class="article-content">
+      <p>Dit is een generieke template pagina. Je kunt dit bestand eenvoudig kopiëren, een andere bestandsnaam geven (bijvoorbeeld <code>muziek-middeleeuwen.html</code>) en vullen met je eigen lesmateriaal of teksten.</p>
+
+      <h2>Eerste kopje (H2)</h2>
+      <p>Hier schrijf je de inleiding of de hoofdtekst van je alinea. Dankzij de centrale stylesheets in <code>css/main.css</code> en <code>css/colors.css</code> past de opmaak zich direct aan over je gehele website.</p>
+
+      <div class="callout-box">
+        <p>💡 <strong>Tip:</strong> Belangrijke opmerkingen of kernbegrippen kun je in zo'n handig kader plaatsen om ze extra te laten opvallen.</p>
+      </div>
+
+      <h2>Tweede kopje (H2)</h2>
+      <p>Je kunt hier ook opsommingen of lijsten in verwerken:</p>
+      <ul>
+        <li>Eerste belangrijk punt over het onderwerp.</li>
+        <li>Tweede punt met extra toelichting.</li>
+        <li>Derde punt om de lijst compleet te maken.</li>
+      </ul>
+
+      <h3>Subkopje (H3)</h3>
+      <p>Voor verdere verdieping binnen een alinea kun je gebruikmaken van subkopjes.</p>
+    </div>
+
+  </main>
+
+  <!-- Hamburger Navigatie Script -->
+  <script>
+    // 1. Zorg dat je hier al je pagina's toevoegt naarmate je website groeit
+    const menuLinks = [
+      { label: "🏠 Home", url: "index.html" },
+      { label: "⏳ Cultuurgeschiedenis", url: "cultges.html" },
+      { label: "📄 Generieke Pagina", url: "generic.html" },
+      { label: "🎨 UI Elementen", url: "elementen.html" }
+    ];
+
+    // 2. Bepaal actieve pagina automatisch
+    const currentPath = window.location.pathname.split("/").pop() || "index.html";
+
+    // 3. Bouw menu HTML
+    const menuItemsHTML = menuLinks.map(link => {
+      const isActive = link.url === currentPath ? 'class="active"' : '';
+      return `<li><a href="${link.url}" ${isActive}>${link.label}</a></li>`;
+    }).join("");
+
+    const navigationHTML = `
+      <button class="menu-toggle" id="menuBtn" aria-label="Menu openen">
+        ☰ <span>Menu</span>
+      </button>
+      <nav class="sidebar" id="sidebar">
+        <h2>Onderwijs Hub</h2>
+        <ul>
+          ${menuItemsHTML}
+        </ul>
+      </nav>
+    `;
+
+    // 4. Injecteer menu
+    document.body.insertAdjacentHTML('afterbegin', navigationHTML);
+
+    // 5. Toggle sidebar
+    const menuBtn = document.getElementById('menuBtn');
+    const sidebar = document.getElementById('sidebar');
+
+    menuBtn.addEventListener('click', () => {
+      sidebar.classList.toggle('open');
+    });
+  </script>
+</body>
+</html>

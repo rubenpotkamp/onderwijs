@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UI Elementen - Onderwijs Hub</title>
+  <link rel="stylesheet" href="css/main.css">
+  <style>
+    .elements-section {
+      margin-bottom: 40px;
+      padding-bottom: 30px;
+      border-bottom: 1px solid #e2e8f0;
+    }
+
+    .elements-section h2 {
+      font-size: 1.6rem;
+      color: var(--text-main);
+      margin-bottom: 10px;
+    }
+
+    .elements-section p.section-intro {
+      color: var(--text-muted);
+      margin-bottom: 20px;
+    }
+
+    .component-box {
+      background-color: var(--card-bg);
+      border: 1px solid #cbd5e1;
+      border-radius: 10px;
+      padding: 24px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+    }
+
+    /* Stijlen voor de componenten zelf die je hier demonstreert */
+    .btn {
+      display: inline-block;
+      background-color: var(--primary);
+      color: white;
+      padding: 10px 20px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .btn:hover {
+      background-color: var(--primary-hover);
+    }
+
+    .btn-secondary {
+      background-color: #64748b;
+    }
+    .btn-secondary:hover {
+      background-color: #475569;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 4px 10px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      border-radius: 20px;
+      background-color: #e0f2fe;
+      color: #0369a1;
+    }
+
+    .badge-accent {
+      background-color: #ffee99;
+      color: #854d0e;
+    }
+
+    .callout {
+      padding: 15px 20px;
+      border-radius: 6px;
+      margin: 10px 0;
+      font-size: 0.95rem;
+    }
+    .callout-info {
+      background-color: #e0f2fe;
+      border-left: 4px solid #0284c7;
+      color: #0369a1;
+    }
+    .callout-warning {
+      background-color: #fef3c7;
+      border-left: 4px solid #d97706;
+      color: #92400e;
+    }
+
+    code.snippet {
+      display: block;
+      background-color: #0f172a;
+      color: #38bdf8;
+      padding: 15px;
+      border-radius: 6px;
+      font-family: monospace;
+      font-size: 0.9rem;
+      overflow-x: auto;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <main class="page-container">
+    
+    <header style="margin-bottom: 30px;">
+      <h1>🎨 UI Elementen & Componenten</h1>
+      <p style="color: var(--text-muted); font-size: 1.1rem;">Kopieer en plak deze elementen direct in je generieke pagina's.</p>
+    </header>
+
+    <!-- Sectie 1: Knoppen -->
+    <section class="elements-section">
+      <h2>1. Knoppen (Buttons)</h2>
+      <p class="section-intro">Verschillende stijlen voor actieknoppen of links.</p>
+      
+      <div class="component-box">
+        <div style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap; margin-bottom: 15px;">
+          <a href="#" class="btn">Primaire Knop</a>
+          <a href="#" class="btn btn-secondary">Secundaire Knop</a>
+        </div>
+        <code class="snippet">&lt;a href="#" class="btn"&gt;Primaire Knop&lt;/a&gt;
+&lt;a href="#" class="btn btn-secondary"&gt;Secundaire Knop&lt;/a&gt;</code>
+      </div>
+    </section>
+
+    <!-- Sectie 2: Badges & Tags -->
+    <section class="elements-section">
+      <h2>2. Badges & Labels</h2>
+      <p class="section-intro">Handig om categorieën of statussen aan te duiden.</p>
+      
+      <div class="component-box">
+        <div style="display: flex; gap: 10px; align-items: center; margin-bottom: 15px;">
+          <span class="badge">Nieuw</span>
+          <span class="badge badge-accent">Uitgelicht</span>
+        </div>
+        <code class="snippet">&lt;span class="badge"&gt;Nieuw&lt;/span&gt;
+&lt;span class="badge badge-accent"&gt;Uitgelicht&lt;/span&gt;</code>
+      </div>
+    </section>
+
+    <!-- Sectie 3: Callout Kaders -->
+    <section class="elements-section">
+      <h2>3. Waarschuwing- en Infokaders</h2>
+      <p class="section-intro">Om belangrijke opmerkingen of tips uit te lichten.</p>
+      
+      <div class="component-box">
+        <div class="callout callout-info">
+          <strong>💡 Handig:</strong> Dit is een informatief kader voor extra toelichting bij lesstof.
+        </div>
+        <div class="callout callout-warning" style="margin-top: 10px;">
+          <strong>⚠️ Let op:</strong> Dit kader kun je gebruiken voor belangrijke deadlines of uitzonderingen.
+        </div>
+        <code class="snippet">&lt;div class="callout callout-info"&gt;
+  &lt;strong&gt;💡 Handig:&lt;/strong&gt; Tekst...
+&lt;/div&gt;</code>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Hamburger Navigatie Script -->
+  <script>
+    const menuLinks = [
+      { label: "🏠 Home", url: "index.html" },
+      { label: "⏳ Cultuurgeschiedenis", url: "cultges.html" },
+      { label: "📄 Generieke Pagina", url: "generic.html" },
+      { label: "🎨 UI Elementen", url: "elementen.html" }
+    ];
+
+    const currentPath = window.location.pathname.split("/").pop() || "index.html";
+
+    const menuItemsHTML = menuLinks.map(link => {
+      const isActive = link.url === currentPath ? 'class="active"' : '';
+      return `<li><a href="${link.url}" ${isActive}>${link.label}</a></li>`;
+    }).join("");
+
+    const navigationHTML = `
+      <button class="menu-toggle" id="menuBtn" aria-label="Menu openen">
+        ☰ <span>Menu</span>
+      </button>
+      <nav class="sidebar" id="sidebar">
+        <h2>Onderwijs Hub</h2>
+        <ul>
+          ${menuItemsHTML}
+        </ul>
+      </nav>
+    `;
+
+    document.body.insertAdjacentHTML('afterbegin', navigationHTML);
+
+    const menuBtn = document.getElementById('menuBtn');
+    const sidebar = document.getElementById('sidebar');
+
+    menuBtn.addEventListener('click', () => {
+      sidebar.classList.toggle('open');
+    });
+  </script>
+</body>
+</html>

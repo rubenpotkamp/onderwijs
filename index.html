@@ -3,285 +3,157 @@
     <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Onderwijs Hub</title>
+    <title>Home - Onderwijs Hub</title>
+    <link rel="stylesheet" href="css/main.css">
     <style>
-        * {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-        }
-        body, html {
-        width: 100%;
-        height: 100%;
-        font-family: system-ui, -apple-system, sans-serif;
-        overflow: hidden;
+        /* Specifieke stijlen voor de homepagina tegels/cards */
+        .hero {
+        text-align: center;
+        margin-bottom: 40px;
         }
 
-        /* Floating Hamburger Button */
-        .menu-toggle {
-        position: fixed;
-        top: 15px;
-        left: 15px;
-        z-index: 1000;
-        background-color: #1e293b;
-        color: #fff;
-        border: none;
-        padding: 10px 14px;
-        border-radius: 8px;
-        cursor: pointer;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-        font-size: 1.2rem;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        transition: background 0.2s ease;
-        }
-        .menu-toggle:hover {
-        background-color: #334155;
-        }
-
-        /* Off-Canvas Navigation Sidebar */
-        .sidebar {
-        position: fixed;
-        top: 0;
-        left: -280px;
-        width: 280px;
-        height: 100%;
-        background-color: #0f172a;
-        color: #fff;
-        z-index: 999;
-        transition: left 0.3s ease;
-        padding: 70px 20px 20px 20px;
-        box-shadow: 4px 0 15px rgba(0,0,0,0.2);
-        }
-        .sidebar.open {
-        left: 0;
-        }
-
-        .sidebar h2 {
-        font-size: 1.2rem;
-        margin-bottom: 20px;
-        color: #94a3b8;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-        }
-
-        .sidebar ul {
-        list-style: none;
-        }
-
-        .sidebar li {
+        .hero h1 {
+        font-size: 2.5rem;
+        color: var(--text-main);
         margin-bottom: 12px;
         }
 
-        .sidebar a {
-        color: #f8fafc;
+        .hero p {
+        font-size: 1.15rem;
+        color: var(--text-muted);
+        max-width: 650px;
+        margin: 0 auto;
+        }
+
+        .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 20px;
+        margin-top: 30px;
+        }
+
+        .card {
+        background-color: var(--card-bg);
+        border: 1px solid #e2e8f0;
+        border-radius: 12px;
+        padding: 24px;
         text-decoration: none;
-        font-size: 1.05rem;
-        display: block;
-        padding: 8px 12px;
-        border-radius: 6px;
-        transition: background 0.2s ease;
-        }
-
-        .sidebar a:hover, .sidebar a.active {
-        background-color: #1e293b;
-        color: #38bdf8;
-        }
-
-        /* Viewer Container (Kan iframe of home-content zijn) */
-        .content-container {
-        width: 100%;
-        height: 100vh;
-        border: none;
-        position: absolute;
-        top: 0;
-        left: 0;
-        }
-
-        .content-frame {
-        width: 100%;
-        height: 100%;
-        border: none;
-        display: none;
-        }
-        .content-frame.active {
-        display: block;
-        }
-
-        /* Stijl voor de Homepagina */
-        .home-view {
-        width: 100%;
-        height: 100%;
-        padding: 80px 20px 40px 20px;
-        display: none;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-        overflow-y: auto;
-        text-align: center;
-        }
-        .home-view.active {
+        color: inherit;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
         display: flex;
+        flex-direction: column;
+        justify-content: space-between;
         }
-        .home-card {
-        max-width: 700px;
-        background: #ffffff;
-        padding: 40px;
-        border-radius: 16px;
-        box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+
+        .card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.06);
         }
-        .home-card h1 {
-        font-size: 2.2rem;
-        color: #0f172a;
-        margin-bottom: 15px;
+
+        .card h3 {
+        font-size: 1.25rem;
+        color: var(--text-main);
+        margin-bottom: 8px;
         }
-        .home-card p {
-        font-size: 1.1rem;
-        color: #475569;
-        line-height: 1.6;
-        margin-bottom: 25px;
+
+        .card p {
+        font-size: 0.95rem;
+        color: var(--text-muted);
+        line-height: 1.5;
         }
-        .home-btn {
-        background-color: #0284c7;
-        color: white;
-        border: none;
-        padding: 12px 24px;
-        font-size: 1rem;
-        border-radius: 8px;
-        cursor: pointer;
+
+        .card-link {
+        margin-top: 16px;
         font-weight: 600;
-        transition: background 0.2s;
-        }
-        .home-btn:hover {
-        background-color: #0369a1;
+        color: var(--primary);
+        display: flex;
+        align-items: center;
+        gap: 6px;
         }
     </style>
     </head>
     <body>
 
-    <!-- Hamburger Button -->
-    <button class="menu-toggle" id="menuBtn" aria-label="Menu openen">
-        ☰ <span style="font-size: 0.9rem; font-weight: 600;">Menu</span>
-    </button>
-
-    <!-- Sidebar Navigatie -->
-    <nav class="sidebar" id="sidebar">
-        <h2>Onderwijs Hub</h2>
-        <ul id="navList">
-        <!-- Dynamisch gevuld -->
-        </ul>
-    </nav>
-
-    <!-- Content Omgeving -->
-    <div class="content-container" id="contentContainer">
+    <!-- Hoofdcontent van de Homepagina -->
+    <main class="page-container">
         
-        <!-- Homepagina View -->
-        <div class="home-view active" id="homeView">
-        <div class="home-card">
-            <h1>Welkom bij de Onderwijs Hub</h1>
-            <p>Ontdek waardevolle tijdlijnen over muziek, cultuurgeschiedenis en meer. Gebruik het menu linksboven om door de verschillende interactieve tijdlijnen te bladeren.</p>
-            <button class="home-btn" id="startBtn">Bekijk Tijdlijnen</button>
-        </div>
-        </div>
+        <section class="hero">
+        <h1>Welkom bij de Onderwijs Hub</h1>
+        <p>Ontdek interactieve tijdlijnen, lesmaterialen en naslagwerken over cultuur, muziek en geschiedenis.</p>
+        </section>
 
-        <!-- Dynamische Iframe Views komen hier -->
-    </div>
+        <!-- Grid met snelkoppelingen naar je pagina's -->
+        <section class="grid">
+        
+        <a href="cultges.html" class="card">
+            <div>
+            <h3>⏳ Cultuurgeschiedenis</h3>
+            <p>Bekijk de interactieve TimelineJS over belangrijke culturele stromingen en gebeurtenissen.</p>
+            </div>
+            <span class="card-link">Open tijdlijn &rarr;</span>
+        </a>
 
+        <a href="template.html" class="card">
+            <div>
+            <h3>📄 Generic Template</h3>
+            <p>Voorbeeld van een artikellayout die je kunt kopiëren voor nieuwe pagina's.</p>
+            </div>
+            <span class="card-link">Bekijk template &rarr;</span>
+        </a>
+
+        <a href="elementen.html" class="card">
+            <div>
+            <h3>🎨 UI Elementen</h3>
+            <p>Een handig overzicht van alle opmaakelementen, knoppen en CSS-componenten.</p>
+            </div>
+            <span class="card-link">Bekijk elementen &rarr;</span>
+        </a>
+
+        </section>
+
+    </main>
+
+    <!-- Hamburger Navigatie Script -->
     <script>
-        // Definieer hier je pagina's (de eerste kan de home zijn of we voegen home los toe)
-        const pages = [
-        {
-            title: "🏠 Home",
-            type: "home"
-        },
-        {
-            title: "Muziekgeschiedenis",
-            type: "iframe",
-            url: "https://cdn.knightlab.com/libs/timeline3/latest/embed/index.html?source=1cWqGtYuJrFkoTHvczyFmjTEz_2jFiRf_8d0-5_h_2tM"
-        },
-        {
-            title: "Cultuurgeschiedenis",
-            type: "iframe",
-            url: "https://cdn.knightlab.com/libs/timeline3/latest/embed/index.html?source=EXAMPLE_2"
-        }
+        // 1. Beheer hier centraal de links in het hamburger-menu
+        const menuLinks = [
+        { label: "🏠 Home", url: "index.html" },
+        { label: "⏳ Cultuurgeschiedenis", url: "cultges.html" },
+        { label: "📄 Generic Template", url: "template.html" },
+        { label: "🎨 UI Elementen", url: "elementen.html" }
         ];
 
-        const sidebar = document.getElementById('sidebar');
+        // 2. Bepaal welke pagina nu actief is (voor het markeren van de actieve link)
+        const currentPath = window.location.pathname.split("/").pop() || "index.html";
+
+        // 3. Bouw de HTML voor het menu op
+        const menuItemsHTML = menuLinks.map(link => {
+        const isActive = link.url === currentPath ? 'class="active"' : '';
+        return `<li><a href="${link.url}" ${isActive}>${link.label}</a></li>`;
+        }).join("");
+
+        const navigationHTML = `
+        <button class="menu-toggle" id="menuBtn" aria-label="Menu openen">
+            ☰ <span>Menu</span>
+        </button>
+        <nav class="sidebar" id="sidebar">
+            <h2>Onderwijs Hub</h2>
+            <ul>
+            ${menuItemsHTML}
+            </ul>
+        </nav>
+        `;
+
+        // 4. Injecteer het menu bovenaan de pagina
+        document.body.insertAdjacentHTML('afterbegin', navigationHTML);
+
+        // 5. Toggle event voor de sidebar
         const menuBtn = document.getElementById('menuBtn');
-        const navList = document.getElementById('navList');
-        const contentContainer = document.getElementById('contentContainer');
-        const homeView = document.getElementById('homeView');
-        const startBtn = document.getElementById('startBtn');
+        const sidebar = document.getElementById('sidebar');
 
-        let iframeElements = {};
-
-        function buildMenu() {
-        navList.innerHTML = '';
-        
-        pages.forEach((page, index) => {
-            const li = document.createElement('li');
-            const a = document.createElement('a');
-            a.textContent = page.title;
-            a.href = "#";
-            if (index === 0) a.classList.add('active');
-
-            // Maak iframe aan als het geen home is
-            let iframe = null;
-            if (page.type === 'iframe') {
-            iframe = document.createElement('iframe');
-            iframe.src = page.url;
-            iframe.className = 'content-frame';
-            contentContainer.appendChild(iframe);
-            iframeElements[index] = iframe;
-            }
-
-            a.addEventListener('click', (e) => {
-            e.preventDefault();
-            switchView(index, a);
-            sidebar.classList.remove('open');
-            });
-
-            li.appendChild(a);
-            navList.appendChild(li);
-        });
-        }
-
-        function switchView(index, activeLink) {
-        // Verberg home
-        homeView.classList.remove('active');
-        
-        // Verberg alle iframes
-        Object.values(iframeElements).forEach(frame => frame.classList.remove('active'));
-
-        // Zet actieve link goed
-        document.querySelectorAll('.sidebar a').forEach(link => link.classList.remove('active'));
-        activeLink.classList.add('active');
-
-        // Toon de geselecteerde view
-        if (pages[index].type === 'home') {
-            homeView.classList.add('active');
-        } else if (iframeElements[index]) {
-            iframeElements[index].classList.add('active');
-        }
-        }
-
-        // Start-knop op de homepagina
-        startBtn.addEventListener('click', () => {
-        // Pak de eerste iframe link uit het menu (index 1)
-        const firstIframeLink = navList.querySelectorAll('a')[1];
-        if (firstIframeLink) {
-            firstIframeLink.click();
-        }
-        });
-
-        // Toggle menu
         menuBtn.addEventListener('click', () => {
         sidebar.classList.toggle('open');
         });
-
-        buildMenu();
     </script>
     </body>
 </html>
