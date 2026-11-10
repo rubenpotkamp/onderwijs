@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="nl">
+    <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tijdlijnen - Onderwijspunt</title>
+    <link rel="stylesheet" href="../../css/main.css">
+    <style>
+        /* Specifieke stijlen voor de homepagina tegels/cards */
+        .hero {
+        text-align: center;
+        margin-bottom: 40px;
+        }
+
+        .hero h1 {
+        font-size: 2.5rem;
+        color: var(--text-main);
+        margin-bottom: 12px;
+        }
+
+        .hero p {
+        font-size: 1.15rem;
+        color: var(--text-muted);
+        max-width: 650px;
+        margin: 0 auto;
+        }
+
+        .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 20px;
+        margin-top: 30px;
+        }
+
+        .card {
+        background-color: var(--card-bg);
+        border: 1px solid #e2e8f0;
+        border-radius: 12px;
+        padding: 24px;
+        text-decoration: none;
+        color: inherit;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        }
+
+        .card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.06);
+        }
+
+        .card h3 {
+        font-size: 1.25rem;
+        color: var(--text-main);
+        margin-bottom: 8px;
+        }
+
+        .card p {
+        font-size: 0.95rem;
+        color: var(--text-muted);
+        line-height: 1.5;
+        }
+
+        .card-link {
+        margin-top: 16px;
+        font-weight: 600;
+        color: var(--primary);
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        }
+    </style>
+    </head>
+    <body>
+
+    <!-- Hoofdcontent van de Homepagina -->
+    <main class="page-container">
+        
+        <section class="hero">
+        <h1>Welkom bij Onderwijspunt</h1>
+        <p>Hier vind je een collectie van verschillende visuele en/of interactieve aanvullingen voor in het muziek/kunst onderwijs.</p><br>
+        <p>Je kunt hier bijvoorbeeld tijdlijnen bekijken, korte deep dives lezen ("Spotlights") of handige infographics downloaden.</p>
+        </section>
+
+        <!-- Grid met snelkoppelingen naar je pagina's -->
+        <section class="grid">
+        
+        <a href="page/tijdlijnen/" class="card">
+            <div>
+            <h3>⏳ Tijdlijnen</h3>
+            <p>Bekijk hier verschillende tijdlijnen over de geschiedenis van kunst en cultuur.</p>
+            </div>
+            <span class="card-link">Naar tijdlijnen &rarr;</span>
+        </a>
+
+        <a href="page/spotlights/" class="card">
+            <div>
+            <h3>📄 Spotlights</h3>
+            <p>Hier vind je Spotlights, dit zijn kleine informatieve artikelen over van alles.</p>
+            </div>
+            <span class="card-link">Bekijk spotlights &rarr;</span>
+        </a>
+
+        <a href="page/infographics/" class="card">
+            <div>
+            <h3>🎨 Infographics</h3>
+            <p>Hier vind je handige infographics die je kan gebruiken om je uitleg te versterken.</p>
+            </div>
+            <span class="card-link">Bekijk infographics &rarr;</span>
+        </a>
+
+        </section>
+
+    </main>
+
+    <!-- Hamburger Navigatie Script -->
+    <script>
+        // 1. Beheer hier centraal de links in het hamburger-menu
+        const menuLinks = [
+        { label: "🏠 Home", url: "index.html" },
+        { label: "⏳ Tijdlijnen", url: "page/tijdlijnen/" },
+        { label: "📄 Spotlights", url: "page/spotlights/" },
+        { label: "🎨 Infographics", url: "page/infographics/" }
+        ];
+
+        // 2. Bepaal welke pagina nu actief is (voor het markeren van de actieve link)
+        const currentPath = window.location.pathname.split("/").pop() || "index.html";
+
+        // 3. Bouw de HTML voor het menu op
+        const menuItemsHTML = menuLinks.map(link => {
+        const isActive = link.url === currentPath ? 'class="active"' : '';
+        return `<li><a href="${link.url}" ${isActive}>${link.label}</a></li>`;
+        }).join("");
+
+        const navigationHTML = `
+        <button class="menu-toggle" id="menuBtn" aria-label="Menu openen">
+            ☰ <span>Menu</span>
+        </button>
+        <nav class="sidebar" id="sidebar">
+            <h2>Onderwijs Hub</h2>
+            <ul>
+            ${menuItemsHTML}
+            </ul>
+        </nav>
+        `;
+
+        // 4. Injecteer het menu bovenaan de pagina
+        document.body.insertAdjacentHTML('afterbegin', navigationHTML);
+
+        // 5. Toggle event voor de sidebar
+        const menuBtn = document.getElementById('menuBtn');
+        const sidebar = document.getElementById('sidebar');
+
+        menuBtn.addEventListener('click', () => {
+        sidebar.classList.toggle('open');
+        });
+    </script>
+    </body>
+</html>
